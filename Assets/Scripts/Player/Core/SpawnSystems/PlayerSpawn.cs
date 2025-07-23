@@ -10,6 +10,7 @@ public class PlayerSpawn : MonoCache
     private GameObject spawnedSkin;
     private GameObject spawnedPlayer;
     private Player Player;
+    public Player PlayerLink {  get; private set; }
     public void Init()
     {
         // Спавним сам объект игрока
@@ -19,7 +20,10 @@ public class PlayerSpawn : MonoCache
         spawnedSkin = Instantiate(characterConfig.CharacterPrefab, spawnedPlayer.transform.position, Quaternion.identity, spawnedPlayer.transform);
 
         Player = spawnedPlayer.GetComponent<Player>();
-        Player.GetComponent<MovePlayer>().Init();
+                
         Player.GetComponent<ChargeShoot>().Init();
+        Player.GetComponent<ScaleHP>().Init();
+
+        PlayerLink = Player;
     }
 }

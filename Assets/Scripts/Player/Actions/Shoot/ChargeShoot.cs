@@ -8,10 +8,13 @@ public class ChargeShoot: MonoCache
     [SerializeField] private float shootForce = 500f;
     private KeyboardAndMouseControll input => GetComponent<KeyboardAndMouseControll>();
     private FirePoint firePoint => FindFirstObjectByType<PlayerFirePoint>();
+    private GameStateController GameStateController => GameManager.Instance.GameStateController;
 
     private GameObject currentBullet;
     private Rigidbody bulletRb;
     private Player player;
+    private Transform playerBody; 
+    private States states => player.Config.State;
 
     public void Init()
     {
@@ -38,11 +41,12 @@ public class ChargeShoot: MonoCache
     }
     protected override void Run()
     {
+        if(GameStateController.IsState(States.GameStates.GameOver))  return;
+
         // Если кнопка отпущена и пуля заряжена — выстрел
         if (Input.GetMouseButtonUp(0) && currentBullet != null)
-        {
             ShootStart();
-        }
+
     }
     private void ShootStart()
     {

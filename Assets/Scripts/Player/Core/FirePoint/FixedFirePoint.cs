@@ -14,10 +14,6 @@ public class FixedFirePoint : MonoCache
             return;
 
         // ѕозици€: всегда относительно тела игрока
-        firePoint.position = new Vector3(playerBody.position.x, playerBody.position.y, playerBody.position.z);
-
-        // ѕоворот: фиксируем по Y, игнориру€ остальные
-        Vector3 euler = playerBody.eulerAngles;
-        firePoint.rotation = Quaternion.Euler(euler.x, euler.y, euler.z);
+        firePoint.position = new Vector3(playerBody.position.x, playerBody.position.y, playerBody.position.z + distance);
     }
 }

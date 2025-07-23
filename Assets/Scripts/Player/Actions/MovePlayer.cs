@@ -1,52 +1,44 @@
 using NTC.MonoCache;
-using System;
 using UnityEngine;
 
 /// <summary>
-/// Двигает игрока на основе событий KeyboardAndMouseControll.
+/// Двигает игрока автоматически вперед.
 /// </summary>
 public class MovePlayer : MonoCache
 {
     [SerializeField] private float moveSpeed = 5f;
-    private Vector3 moveDirection;
-    private KeyboardAndMouseControll input => GetComponent<KeyboardAndMouseControll>();
+
+    private Vector3 moveDirection;    
     private Rigidbody rb;
+    private Player Player;
+    private PlayerStateController PlayerStateController;
+    private GameStateController GameStateController => GameManager.Instance.GameStateController;
 
-    public event Action OnMove;
-
-    public void Init()
+    public void Init(Player player)
     {
-        rb = GetComponent<Rigidbody>();
-        input.OnMoveForward += () => moveDirection += Vector3.forward;
-        input.OnMoveBack += () => moveDirection += Vector3.back;
-        input.OnMoveLeft += () => moveDirection += Vector3.left;
-        input.OnMoveRight += () => moveDirection += Vector3.right;
-    }
-    private void Uninit() 
-    {
-        input.OnMoveForward -= () => moveDirection += Vector3.forward;
-        input.OnMoveBack -= () => moveDirection += Vector3.back;
-        input.OnMoveLeft -= () => moveDirection += Vector3.left;
-        input.OnMoveRight -= () => moveDirection += Vector3.right;
-    }
-    private void OnEnable() => Init();
-    private void OnDisable() => Uninit();
-    private void OnDestroy()
-    {
-        Uninit();
-    }
+        Player = player;
+        rb = Player.GetComponent<Rigidbody>();
+        PlayerStateController = Player.StateController;
+        PlayerStateController.SetState(States.PlayerStates.Move);
+        //Debug.Log("player " + Player + " rb " + rb);
+    } 
     private void FixedUpdate()
     {
-        Move();
+        if (GameStateController.IsState(States.GameStates.Play))
+            Move();
+        else
+            StopMoving();
     }
     private void Move() 
-    {
-        if (rb == null) return;
-
+    {        
+        if (rb == null && PlayerStateController.IsState(States.PlayerStates.Move)) return;
+               
         // Двигаем игрока
+        moveDirection = Vector3.forward;
         rb.linearVelocity = moveDirection.normalized * moveSpeed;
-        moveDirection = Vector3.zero; // сбрасываем после применения
-
-        OnMove?.Invoke();
+    }
+    private void StopMoving()
+    {
+        moveDirection = Vector3.zero;
     }
 }

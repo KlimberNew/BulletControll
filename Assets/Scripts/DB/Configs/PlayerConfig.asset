@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   _characterPrefab: {fileID: 5479211477881409645, guid: e585a6654eb4e134ab7d24bafc024266, type: 3}
+  states: {fileID: 11400000, guid: 7471289e755997c4a85dbe0db8268d7d, type: 2}

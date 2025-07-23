@@ -14,7 +14,6 @@ public class FollowerPlayer : MonoCache
 
     private Transform playerTransform;
     private Player Player;
-    private MovePlayer movePlayer;
     public void Init()
     {
         if (playerTransform == null)
@@ -25,27 +24,15 @@ public class FollowerPlayer : MonoCache
             if (Player != null)
             {
                 playerTransform = player.transform;
-                movePlayer = Player.GetComponent<MovePlayer>();
-                movePlayer.OnMove += FollowPlayer;
             }
             else
                 Debug.LogWarning("Player не найден! Ќазначь его вручную в инспекторе.");
         }
     }
-    private void OnEnable()
+    private void Update()
     {
-        if(movePlayer != null)
-            movePlayer.OnMove += FollowPlayer;
+        FollowPlayer();
     }
-    private void OnDisable()
-    {
-        movePlayer.OnMove -= FollowPlayer;
-    }
-    private void OnDestroy()
-    {
-        movePlayer.OnMove -= FollowPlayer;
-    }    
-
     private void FollowPlayer() 
     {
         if (playerTransform == null)

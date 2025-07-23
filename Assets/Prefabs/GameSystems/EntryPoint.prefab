@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followerPlayer: {fileID: 0}
+  movePlayer: {fileID: 8619018801715483294, guid: fdf15ea886cc09b4f83052c72c1d28d1, type: 3}
+  gameManager: {fileID: 7720903428348576876, guid: b85c4b3714697ad4393d40c33a42a0e4, type: 3}
 --- !u!114 &2209495194265224116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,5 +77,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
-  distance: 1.5
+  distance: 10
   firePoint: {fileID: 5753040746053973431, guid: c54c3bd7efbceed4887b07e2ec5cdeca, type: 3}
